@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   description: "Management dashboard for RTTMedia.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+      </head>
       <body className={inter.className}>
         <Header />
         <Body>{children}</Body>

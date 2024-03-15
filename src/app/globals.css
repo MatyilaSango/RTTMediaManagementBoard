@@ -2,7 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    height:  calc(100vh - 80px);
+body {
+    height: calc(100vh - 80px);
 }
 
+.loader::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-image: linear-gradient(to right, rgb(195, 0, 255), red);
+    border-radius: 2px;
+    animation: loader-animation linear 3s;
+}
+
+.loading {
+    animation: loading linear infinite 1s;
+}
+
+@keyframes loader-animation {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes loading {
+    from {
+        rotate: 0deg;
+    }
+
+    to {
+        rotate: 360deg;
+    }
+}
