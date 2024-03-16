@@ -15,7 +15,6 @@ export default function Header() {
       return
     }
     
-    sessionStorage.removeItem("appState")
     const abortController = new AbortController()
     const signal = abortController.signal
     axios.get("https://rrt-media-server-api.vercel.app/api/v1/user/refresh", { signal: signal, withCredentials: true })
