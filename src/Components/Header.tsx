@@ -14,10 +14,11 @@ export default function Header() {
       if (location.pathname !== "/") return redirect("/")
       return
     }
-
+    
+    sessionStorage.removeItem("appState")
     const abortController = new AbortController()
     const signal = abortController.signal
-    axios.get("http://localhost:3001/api/v1/user/refresh", { signal: signal, withCredentials: true })
+    axios.get("https://rrt-media-server-api.vercel.app/api/v1/user/refresh", { signal: signal, withCredentials: true })
       .then(promise => promise.data)
       .then(response => {
         if (response.ok) {
@@ -37,7 +38,7 @@ export default function Header() {
   }, [])
 
   const handleLogOut = async () => {
-    axios.delete("http://localhost:3001/api/tokens/clear", { withCredentials: true })
+    axios.delete("https://rrt-media-server-api.vercel.app/api/tokens/clear", { withCredentials: true })
       .then(promise => promise.data)
       .then(deleteTokenResponse => {
         if (deleteTokenResponse.ok) {
