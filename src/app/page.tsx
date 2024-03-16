@@ -70,7 +70,7 @@ export default function Home() {
                             <input className="h-12 w-11/12 mt-7 px-2 text-sm border-0 border-y border-solid border-black" type="text" required placeholder="Username" name="username" />
                             <input className="h-12 w-11/12 mt-7 px-2 text-sm border-0 border-y border-solid border-black" type="password" required placeholder="Password" name="password" />
                             <div className={"text-red-600 text-xs hidden" + `${incorrectRef.current ? "block" : ""}`}>
-                                Incrorrect username or password
+                                Access denied.
                             </div>
                             <button className="h-12 w-11/12 cursor-pointer rounded-lg mt-5 bg-blue-950 text-white flex justify-center items-center" type="submit">
                                 {isSignInLoading ? <Image className="loading h-6 w-auto" alt="" src={loadingIcon} /> : "Sign in"}

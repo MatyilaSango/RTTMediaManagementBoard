@@ -49,27 +49,14 @@ export default function Page() {
 
     const handleNewPlanForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const inputValues = Array.from(e.currentTarget)
-
-        const newPlanFeatureData = {
-            // @ts-ignore
-            Feature: inputValues[0].value,
-            // @ts-ignore
-            Free: inputValues[1].value,
-            // @ts-ignore
-            Pro: inputValues[2].value,
-            // @ts-ignore
-            Premium: inputValues[3].value,
-        }
-
-        const response = (await axios.post("https://rrt-media-server-api.vercel.app/api/v1/plans", newPlanFeatureData)).data
-
+        const formData = Object.fromEntries(new FormData(e.currentTarget).entries())
+        const response = (await axios.post("https://rrt-media-server-api.vercel.app/api/v1/plans", formData, {withCredentials: true})).data
         if (response.ok) setPlans(prev => prev = response.data)
     }
 
     return (
         appState?.userAccount.Username ?
-        <div className="w-full p-2 flex flex-row flex-wrap gap-2">
+        <div className="w-full p-2 grid grid-cols-1 gap-2">
             <div className="w-full bg-slate-100 p-1">
                 <div className="p-3 bg-blue-600 flex gap-2 items-center w-fit text-white rounded cursor-pointer hover:shadow-lg" onClick={() => { setAddNew(prev => !prev) }}>
                     <Image className="h-6" alt="" src={addIcon} />

@@ -14,23 +14,22 @@ export default function Header() {
       if (location.pathname !== "/") return redirect("/")
       return
     }
-    const state: TState = JSON.parse(sessionStorage.getItem("appState") as string)
-    if(state) return setAppState(prev => prev = state)
 
     const abortController = new AbortController()
     const signal = abortController.signal
-    axios.get("https://rrt-media-server-api.vercel.app/api/v1/user/refresh", { signal: signal, withCredentials: true })
+    axios.get("http://localhost:3001/api/v1/user/refresh", { signal: signal, withCredentials: true })
       .then(promise => promise.data)
       .then(response => {
         if (response.ok) {
           setAppState(prev => prev = { userAccount: response.data })
           sessionStorage.setItem("appState", JSON.stringify({ userAccount: response.data }))
-          if (location.pathname !== "/Dashboard") redirect("/Dashboard")
-          location.reload()
+          if (location.pathname === "/") return location.href = "/Dashboard"
+          return
         }
       })
-      .catch(error => {
-          if (location.pathname !== "/") return redirect("/")
+      .catch((error) => {
+        if(error.code === "ERR_CANCELED") return
+        if (location.pathname !== "/") location.href = "/"
       })
     return () => {
       abortController.abort()
@@ -38,7 +37,7 @@ export default function Header() {
   }, [])
 
   const handleLogOut = async () => {
-    axios.delete("https://rrt-media-server-api.vercel.app/api/tokens/clear", { withCredentials: true })
+    axios.delete("http://localhost:3001/api/tokens/clear", { withCredentials: true })
       .then(promise => promise.data)
       .then(deleteTokenResponse => {
         if (deleteTokenResponse.ok) {

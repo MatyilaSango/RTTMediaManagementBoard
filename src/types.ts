@@ -11,10 +11,12 @@ export type TTable = {
     columns: TColumn[]
 }
 
+export type TUserAccount = {
+    [key: string]: any
+}
+
 export type TState = {
-    userAccount: {
-        [key: string]: any
-    };
+    userAccount: TUserAccount
 }
 
 export interface TAction {
