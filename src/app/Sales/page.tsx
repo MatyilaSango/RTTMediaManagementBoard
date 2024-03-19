@@ -4,8 +4,8 @@ import Table from "@/Components/Table"
 import { TColumn, TState } from "@/types"
 import axios from "axios"
 import { Suspense, useEffect, useState } from "react"
-import Image from 'next/image'
-import addIcon from "@/images/add.svg"
+import { CellContext } from "@tanstack/react-table"
+axios.defaults.withCredentials = true
 
 export default function Sales() {
   const [appState, setAppState] = useState<TState>()
@@ -17,12 +17,10 @@ export default function Sales() {
     const state = JSON.parse(sessionStorage.getItem("appState") as string)
     if (!state) return
     setAppState(prev => prev = state)
-  }, [])
 
-  useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal
-    axios.get("https://rrt-media-server-api.vercel.app/api/v1/sales", { signal: signal, withCredentials: true })
+    axios.get("https://rrt-media-server-api.vercel.app/api/v1/sales", { signal: signal})
       .then(data => data.data)
       .then(data => {
         if (data.ok) setSales(prev => prev = data.data)
@@ -47,13 +45,21 @@ export default function Sales() {
   }
   handleTableData()
 
+  function handleEdit(cell: CellContext<unknown, any>): void {
+    throw new Error("Function not implemented.")
+  }
+
+  function handleDelete(cell: CellContext<unknown, any>): void {
+    throw new Error("Function not implemented.")
+  }
+
   return (
     appState?.userAccount.Username ?
-        <div className="w-full p-2 grid grid-cols-1 gap-2">
-            <Suspense fallback={<Loading />}>
-                <Table data={sales} columns={columns} />
-            </Suspense>
-        </div>
-        :""
+      <div className="w-full p-2 grid grid-cols-1 gap-2">
+        <Suspense fallback={<Loading />}>
+          <Table data={sales} columns={columns} handleEdit={handleEdit} handleDelete={handleDelete}/>
+        </Suspense>
+      </div>
+      : ""
   )
 }

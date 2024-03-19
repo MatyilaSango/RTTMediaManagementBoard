@@ -1,4 +1,4 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { CellContext, ColumnDef } from "@tanstack/react-table";
 
 export type TBody = {
     children: React.ReactNode;
@@ -8,7 +8,9 @@ export type TColumn = ColumnDef<unknown, any>
 
 export type TTable = {
     data: unknown[];
-    columns: TColumn[]
+    columns: TColumn[];
+    handleEdit: (cell: CellContext<unknown, any>) => void
+    handleDelete: (cell: CellContext<unknown, any>) => void
 }
 
 export type TUserAccount = {

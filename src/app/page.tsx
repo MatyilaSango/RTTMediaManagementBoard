@@ -5,7 +5,6 @@ import loadingIcon from "@/images/update.svg"
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-axios.defaults.withCredentials = true
 
 export default function Home() {
     const [isSignInLoading, setIsSignInLoading] = useState<boolean>(false)

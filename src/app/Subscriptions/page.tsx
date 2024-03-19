@@ -6,6 +6,8 @@ import axios from "axios"
 import { Suspense, useEffect, useState } from "react"
 import Image from 'next/image'
 import addIcon from "@/images/add.svg"
+import { CellContext } from "@tanstack/react-table"
+axios.defaults.withCredentials = true
 
 export default function Subscriptions() {
   const [appState, setAppState] = useState<TState>()
@@ -17,12 +19,10 @@ export default function Subscriptions() {
     const state = JSON.parse(sessionStorage.getItem("appState") as string)
     if (!state) return
     setAppState(prev => prev = state)
-  }, [])
 
-  useEffect(() => {
     const abortController = new AbortController()
     const signal = abortController.signal
-    axios.get("https://rrt-media-server-api.vercel.app/api/v1/subscriptions", { signal: signal, withCredentials: true })
+    axios.get("https://rrt-media-server-api.vercel.app/api/v1/subscriptions", { signal: signal })
       .then(data => data.data)
       .then(data => {
         if (data.ok) setSubscriptions(prev => prev = data.data)
@@ -50,7 +50,17 @@ export default function Subscriptions() {
   const handleNewSubscriptionForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.currentTarget).entries())
-    const response = (await axios.post("https://rrt-media-server-api.vercel.app/api/v1/subscriptions", formData, {withCredentials: true})).data
+    const response = (await axios.post("https://rrt-media-server-api.vercel.app/api/v1/subscriptions", formData)).data
+    if (response.ok) setSubscriptions(prev => prev = response.data)
+  }
+
+  function handleEdit(cell: CellContext<unknown, any>): void {
+    throw new Error("Function not implemented.")
+  }
+
+  async function handleDelete(cell: CellContext<unknown, any>): Promise<void> {
+    const subscription = cell.row.original as any
+    const response = (await axios.post("https://rrt-media-server-api.vercel.app/api/v1/subscription/delete", { Uid: subscription.Uid })).data
     if (response.ok) setSubscriptions(prev => prev = response.data)
   }
 
@@ -79,7 +89,7 @@ export default function Subscriptions() {
           }
         </div>
         <Suspense fallback={<Loading />}>
-          <Table data={subscriptions} columns={columns} />
+          <Table data={subscriptions} columns={columns} handleEdit={handleEdit} handleDelete={handleDelete}/>
         </Suspense>
       </div>
       : ""

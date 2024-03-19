@@ -5,6 +5,7 @@ import userIcon from "@/images/user.svg"
 import axios from 'axios'
 import { redirect } from 'next/navigation'
 import { TState } from '@/types'
+axios.defaults.withCredentials = true
 
 export default function Header() {
   const [appState, setAppState] = useState<TState>()
@@ -17,7 +18,7 @@ export default function Header() {
     
     const abortController = new AbortController()
     const signal = abortController.signal
-    axios.get("https://rrt-media-server-api.vercel.app/api/v1/user/refresh", { signal: signal, withCredentials: true })
+    axios.get("https://rrt-media-server-api.vercel.app/api/v1/user/refresh", { signal: signal })
       .then(promise => promise.data)
       .then(response => {
         if (response.ok) {
@@ -37,7 +38,7 @@ export default function Header() {
   }, [])
 
   const handleLogOut = async () => {
-    axios.delete("https://rrt-media-server-api.vercel.app/api/tokens/clear", { withCredentials: true })
+    axios.delete("https://rrt-media-server-api.vercel.app/api/tokens/clear")
       .then(promise => promise.data)
       .then(deleteTokenResponse => {
         if (deleteTokenResponse.ok) {
