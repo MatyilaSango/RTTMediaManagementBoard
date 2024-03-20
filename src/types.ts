@@ -1,4 +1,5 @@
 import { CellContext, ColumnDef } from "@tanstack/react-table";
+import { Dispatch, SetStateAction } from "react";
 
 export type TBody = {
     children: React.ReactNode;
@@ -9,14 +10,15 @@ export type TColumn = ColumnDef<unknown, any>
 export type TTable = {
     data: unknown[];
     columns: TColumn[];
-    handleEdit: (cell: CellContext<unknown, any>) => void
+    setRowToUpdate: Dispatch<SetStateAction<TGenericObject>>
     handleDelete: (cell: CellContext<unknown, any>) => void
 }
 
-export type TUserAccount = {
+export type TGenericObject = {
     [key: string]: any
 }
 
+export type TUserAccount = TGenericObject
 export type TState = {
     userAccount: TUserAccount
 }
@@ -24,4 +26,11 @@ export type TState = {
 export interface TAction {
     type: string;
     payload: any;
-  }
+}
+
+export type TEditEntity = {
+    pageName: string;
+    entity: TGenericObject;
+    handleEdit: (editedProperties: TGenericObject) => void
+    HandleCancel: Dispatch<SetStateAction<TGenericObject>>
+}

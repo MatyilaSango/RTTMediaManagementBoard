@@ -38,6 +38,7 @@ export default function Header() {
   }, [])
 
   const handleLogOut = async () => {
+    document.getElementById("header")?.classList.add("loader")
     axios.delete("https://rrt-media-server-api.vercel.app/api/tokens/clear")
       .then(promise => promise.data)
       .then(deleteTokenResponse => {
@@ -50,7 +51,7 @@ export default function Header() {
       .catch(eror => { })
   }
   return (
-    <div className="h-20 flex items-center justify-between relative pl-4 pr-4 text-white bg-gradient-to-r from-purple-900 to-blue-900">
+    <div id="header" className="h-20 flex items-center justify-between relative pl-4 pr-4 text-white bg-gradient-to-r from-purple-900 to-blue-900">
       <div className="text-3xl font-bold">Dashboard</div>
       <div className="flex items-center">
         {appState?.userAccount?.Username ?

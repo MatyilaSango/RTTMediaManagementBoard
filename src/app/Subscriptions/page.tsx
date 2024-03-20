@@ -1,12 +1,13 @@
 "use client"
 import Loading from "@/Components/Loading"
 import Table from "@/Components/Table"
-import { TColumn, TState } from "@/types"
+import { TColumn, TGenericObject, TState } from "@/types"
 import axios from "axios"
 import { Suspense, useEffect, useState } from "react"
 import Image from 'next/image'
 import addIcon from "@/images/add.svg"
 import { CellContext } from "@tanstack/react-table"
+import EditEntity from "@/Components/EditEntity"
 axios.defaults.withCredentials = true
 
 export default function Subscriptions() {
@@ -14,8 +15,10 @@ export default function Subscriptions() {
   const [subscriptions, setSubscriptions] = useState<any[]>([])
   const [columns, setColumns] = useState<TColumn[]>([])
   const [addNew, setAddNew] = useState<boolean>(false)
+  const [rowToUpdate, setRowToUpdate] = useState<TGenericObject>({})
 
   useEffect(() => {
+    document.getElementById("header")?.classList.remove("loader")
     const state = JSON.parse(sessionStorage.getItem("appState") as string)
     if (!state) return
     setAppState(prev => prev = state)
@@ -54,8 +57,11 @@ export default function Subscriptions() {
     if (response.ok) setSubscriptions(prev => prev = response.data)
   }
 
-  function handleEdit(cell: CellContext<unknown, any>): void {
-    throw new Error("Function not implemented.")
+  async function handleEdit(editedProperties: TGenericObject): Promise<void> {
+    const response = (await axios.put("https://rrt-media-server-api.vercel.app/api/v1/subscription", editedProperties)).data
+    if(!response.ok) return
+    setSubscriptions(prev => prev = response.data)
+    setRowToUpdate(prev => prev = {})
   }
 
   async function handleDelete(cell: CellContext<unknown, any>): Promise<void> {
@@ -66,7 +72,7 @@ export default function Subscriptions() {
 
   return (
     appState?.userAccount.Username ?
-      <div className="w-full p-2 grid grid-cols-1 gap-2">
+      <div className="w-full p-2 grid grid-cols-1 gap-2 relative">
         <div className="w-full bg-slate-100 p-1">
           <div className="p-3 bg-blue-600 flex gap-2 items-center w-fit text-white rounded cursor-pointer hover:shadow-lg" onClick={() => { setAddNew(prev => !prev) }}>
             <Image className="h-6" alt="" src={addIcon} />
@@ -89,8 +95,9 @@ export default function Subscriptions() {
           }
         </div>
         <Suspense fallback={<Loading />}>
-          <Table data={subscriptions} columns={columns} handleEdit={handleEdit} handleDelete={handleDelete}/>
+          <Table data={subscriptions} columns={columns} setRowToUpdate={setRowToUpdate} handleDelete={handleDelete}/>
         </Suspense>
+        {Object.keys(rowToUpdate).length > 0 ? <EditEntity pageName="subscription" entity={rowToUpdate} handleEdit={handleEdit} HandleCancel={setRowToUpdate}/> : ""}
       </div>
       : ""
   )

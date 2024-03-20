@@ -15,7 +15,7 @@ body {
     height: 5px;
     background-image: linear-gradient(to right, rgb(195, 0, 255), red);
     border-radius: 2px;
-    animation: loader-animation linear 3s;
+    animation: loader-animation linear 1s;
 }
 
 .loading {
@@ -37,7 +37,7 @@ body {
     }
 
     to {
-        width: 100%;
+        width: 90%;
     }
 }
 

@@ -1,23 +1,23 @@
-import { TTable } from "@/types"
+import { TGenericObject, TTable } from "@/types"
 import { useReactTable, flexRender, getCoreRowModel } from "@tanstack/react-table"
 import Image from 'next/image'
 import editIcon from "@/images/edit.svg"
 import deleteIcon from "@/images/delete.svg"
 
-const useCustomReactTable = ({data, columns, handleEdit, handleDelete}: TTable) =>{
+const useCustomReactTable = ({data, columns, setRowToUpdate, handleDelete}: TTable) =>{
     let columnsTmp = [...columns]
     columnsTmp.push({
         header: "Actions",
         cell: (info) => <div className="flex gap-1">
-          <Image alt="" src={editIcon} width={20} className="cursor-pointer" onClick={() => { handleEdit(info) }} />
+          <Image alt="" src={editIcon} width={20} className="cursor-pointer" onClick={() => { setRowToUpdate(info.row.original as TGenericObject) }} />
           <Image alt="" src={deleteIcon} width={20} className="cursor-pointer" onClick={() => { handleDelete(info) }} />
         </div>
     })
     return useReactTable({data, columns: columnsTmp, getCoreRowModel: getCoreRowModel()})
 }
 
-export default function Table({data, columns, handleEdit, handleDelete}: TTable) {
-    const table = useCustomReactTable({data, columns, handleEdit, handleDelete})
+export default function Table({data, columns, setRowToUpdate, handleDelete}: TTable) {
+    const table = useCustomReactTable({data, columns, setRowToUpdate, handleDelete})
 
     return (
         <div className="overflow-x-auto w-full scrollbar">

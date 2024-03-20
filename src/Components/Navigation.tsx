@@ -35,21 +35,17 @@ export default function Navigation() {
             name: "Plans",
             link: "/Plans"
         }
-        
     ]
 
     const handleNavOnclick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.currentTarget.classList.add("loader")
-        setTimeout(() => {
-            e.currentTarget.classList.remove("loader")
-        }, 3000)
+        document.getElementById("header")?.classList.add("loader")
     }
 
     return (
         <div className="bg-gradient-to-r from-purple-900 to-blue-900 w-52 text-base text-white h-full">
             {navItems.map(item =>
                 <Link href={item.link} key={item.name}>
-                    <div className="h-13 min-w-fit flex items-center border-y-4 p-3 cursor-pointer hover:bg-blue-600" onClick={(e) => handleNavOnclick}>
+                    <div className="h-13 min-w-fit flex items-center border-y-4 p-3 cursor-pointer hover:bg-blue-600" onClick={handleNavOnclick}>
                         <Image alt='' src={item.icon} className="h-6" />
                         <span className="ml-2">{item.name}</span>
                     </div>

@@ -1,7 +1,7 @@
 "use client"
 import Loading from "@/Components/Loading"
 import Table from "@/Components/Table"
-import { TColumn, TState } from "@/types"
+import { TColumn, TGenericObject, TState } from "@/types"
 import axios from "axios"
 import { Suspense, useEffect, useState } from "react"
 import { CellContext } from "@tanstack/react-table"
@@ -11,9 +11,10 @@ export default function Sales() {
   const [appState, setAppState] = useState<TState>()
   const [sales, setSales] = useState<any[]>([])
   const [columns, setColumns] = useState<TColumn[]>([])
-  const [addNew, setAddNew] = useState<boolean>(false)
+  const [rowToUpdate, setRowToUpdate] = useState<TGenericObject>({})
 
   useEffect(() => {
+    document.getElementById("header")?.classList.remove("loader")
     const state = JSON.parse(sessionStorage.getItem("appState") as string)
     if (!state) return
     setAppState(prev => prev = state)
@@ -45,19 +46,19 @@ export default function Sales() {
   }
   handleTableData()
 
-  function handleEdit(cell: CellContext<unknown, any>): void {
-    throw new Error("Function not implemented.")
+  function handleEdit(editedProperties: TGenericObject): void {
+    // throw new Error("Function not implemented.")
   }
 
   function handleDelete(cell: CellContext<unknown, any>): void {
-    throw new Error("Function not implemented.")
+    // throw new Error("Function not implemented.")
   }
 
   return (
     appState?.userAccount.Username ?
-      <div className="w-full p-2 grid grid-cols-1 gap-2">
+      <div className="w-full p-2 grid grid-cols-1 gap-2 relative">
         <Suspense fallback={<Loading />}>
-          <Table data={sales} columns={columns} handleEdit={handleEdit} handleDelete={handleDelete}/>
+          <Table data={sales} columns={columns} setRowToUpdate={setRowToUpdate} handleDelete={handleDelete}/>
         </Suspense>
       </div>
       : ""
