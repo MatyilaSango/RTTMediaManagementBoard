@@ -75,7 +75,7 @@ export default function Users() {
 
   return (
     appState?.userAccount.Username ?
-      <div className="w-full p-2 grid grid-cols-1 gap-2 relative">
+      <div className="w-full grid grid-cols-1 gap-2 relative">
         <div className="w-full bg-slate-100 p-1">
           <div>
             <div className="p-3 bg-blue-600 flex gap-2 items-center w-fit text-white rounded cursor-pointer hover:shadow-lg" onClick={() => { setAddNew(prev => !prev) }}>

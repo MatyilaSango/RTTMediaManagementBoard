@@ -56,7 +56,7 @@ export default function Sales() {
 
   return (
     appState?.userAccount.Username ?
-      <div className="w-full p-2 grid grid-cols-1 gap-2 relative">
+      <div className="w-full grid grid-cols-1 gap-2 relative">
         <Suspense fallback={<Loading />}>
           <Table data={sales} columns={columns} setRowToUpdate={setRowToUpdate} handleDelete={handleDelete}/>
         </Suspense>

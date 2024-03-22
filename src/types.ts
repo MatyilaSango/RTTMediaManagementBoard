@@ -34,3 +34,20 @@ export type TEditEntity = {
     handleEdit: (editedProperties: TGenericObject) => void
     HandleCancel: Dispatch<SetStateAction<TGenericObject>>
 }
+
+export type TSummaryCard = {
+    bgColor: {
+        from: string,
+        to: string
+    }
+    icon: string
+    amount: string
+    description: string
+}
+
+export type TSummaryCardData = {
+    Sales: TSummaryCard | undefined
+    Subscriptions: TSummaryCard | undefined
+    Users: TSummaryCard | undefined
+    Plans: TSummaryCard | undefined
+}

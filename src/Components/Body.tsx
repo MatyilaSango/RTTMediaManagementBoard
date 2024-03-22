@@ -20,7 +20,7 @@ export default function Body({children}: TBody) {
   return (
     <div className="flex  h-full">
         {appState?.userAccount.Username ? <Navigation /> : ""}
-        <div className="p-1 w-full overflow-y-scroll scrollbar">{children}</div>
+        <div className="p-3 w-full overflow-y-scroll scrollbar">{children}</div>
     </div>
   )  
 }
