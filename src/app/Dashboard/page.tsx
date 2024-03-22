@@ -37,7 +37,7 @@ export default function Dashboard() {
                     const amount = data.data.length
                     const description = "Subscriptions"
                     const icon = subscriptionIcon
-                    const bgColor = { from: "purple", to: "purple" }
+                    const bgColor = "purple"
                     setSummaryCardsData(prev => prev = { ...prev, Subscriptions: { amount, description, icon, bgColor } })
                 }
             })
@@ -59,7 +59,7 @@ export default function Dashboard() {
                     const amount = data.data.length
                     const description = "Users"
                     const icon = usersIcon
-                    const bgColor = { from: "orange", to: "orange" }
+                    const bgColor = "orange"
                     setSummaryCardsData(prev => prev = { ...prev, Users: { amount, description, icon, bgColor } })
                 }
             })
@@ -80,7 +80,7 @@ export default function Dashboard() {
                     const amount = data.data.length
                     const description = "Plans"
                     const icon = plansIcon
-                    const bgColor = { from: "pink", to: "pink" }
+                    const bgColor = "pink"
                     setSummaryCardsData(prev => prev = { ...prev, Plans: { amount, description, icon, bgColor } })
                 }
             })

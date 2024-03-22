@@ -30,6 +30,7 @@ export default function Header() {
       })
       .catch((error) => {
         if(error.code === "ERR_CANCELED") return
+        sessionStorage.removeItem("appState")
         if (location.pathname !== "/") location.href = "/"
       })
     return () => {
@@ -51,7 +52,7 @@ export default function Header() {
       .catch(eror => { })
   }
   return (
-    <div id="header" className="h-20 flex items-center justify-between relative pl-4 pr-4 text-white bg-gradient-to-r from-purple-900 to-blue-900">
+    <div id="header" className="h-20 flex items-center justify-between relative pl-4 pr-4 text-white bg-blue-900">
       <div className="text-3xl font-bold">Dashboard</div>
       <div className="flex items-center">
         {appState?.userAccount?.Username ?

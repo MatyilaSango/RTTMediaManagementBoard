@@ -36,10 +36,7 @@ export type TEditEntity = {
 }
 
 export type TSummaryCard = {
-    bgColor: {
-        from: string,
-        to: string
-    }
+    bgColor: string
     icon: string
     amount: string
     description: string

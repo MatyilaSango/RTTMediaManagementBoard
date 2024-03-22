@@ -42,7 +42,7 @@ export default function Navigation() {
     }
 
     return (
-        <div className="bg-gradient-to-r from-purple-900 to-blue-900 w-52 text-base text-white h-full">
+        <div className="bg-blue-900 w-52 text-base text-white h-full">
             {navItems.map(item =>
                 <Link href={item.link} key={item.name}>
                     <div className="h-13 min-w-fit flex items-center border-y-4 p-3 cursor-pointer hover:bg-blue-600" onClick={handleNavOnclick}>
