@@ -50,3 +50,18 @@ body {
         rotate: 360deg;
     }
 }
+
+.bg-orange-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(154 52 18 / var(--tw-bg-opacity));
+}
+
+.bg-pink-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(157 23 77 / var(--tw-bg-opacity));
+}
+
+.bg-purple-800 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(107 33 168 / var(--tw-bg-opacity));
+}
